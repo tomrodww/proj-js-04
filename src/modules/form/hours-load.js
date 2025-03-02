@@ -5,19 +5,25 @@ import { openingHours } from "../../utils/opening-hours.js";
 
 const hours = document.getElementById("hours");
 
-export function hoursLoad({ date }) {
+export function hoursLoad({ date, dailySchedules }) {
   // Clear existing hours first
   hours.innerHTML = '';
+
+  const unavailableHours = dailySchedules.map((schedule) => {
+    return dayjs(schedule.when).format("HH:mm");
+  })
 
   const opening = openingHours.map((hour) => {
 
     const [scheduleHour] = hour.split(":");
     
     const isHourFuture = dayjs(date).add(scheduleHour, "hour").isAfter(dayjs());
+
+    const available = !unavailableHours.includes(hour) && isHourFuture;
     
     return {
       hour,
-      available: isHourFuture
+      available
     }
   })
   

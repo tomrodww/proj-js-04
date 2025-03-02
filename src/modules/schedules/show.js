@@ -8,11 +8,6 @@ const periodNight = document.getElementById("period-night");
 export function schedulesShow({ dailySchedules }) {
   try {
 
-    // 2. Check if elements exist
-    if (!periodMorning || !periodAfternoon || !periodNight) {
-      throw new Error("Required schedule containers not found in the DOM");
-    }
-
     // 3. Clear existing content
     periodMorning.innerHTML = "";
     periodAfternoon.innerHTML = "";
