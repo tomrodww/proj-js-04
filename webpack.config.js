@@ -5,12 +5,12 @@ const webpack = require('webpack');
 
 module.exports = {
   target: 'web',
-  mode: 'development',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: path.resolve(__dirname, 'src', 'main.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
-    publicPath: './',
+    publicPath: process.env.NODE_ENV === 'production' ? '/proj-js-04/' : '/',
   },
 
   devServer: {
@@ -27,6 +27,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'index.html'),
       favicon: path.resolve("src", "assets", "scissors.svg"),
+      base: process.env.NODE_ENV === 'production' ? '/proj-js-04/' : '/',
     }),
     new CopyWebpackPlugin({
       patterns: [
@@ -44,7 +45,16 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: false
+            }
+          }
+        ],
       },
       {
         test: /\.js$/,

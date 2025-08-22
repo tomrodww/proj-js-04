@@ -4,7 +4,7 @@
   "author": "tomrodww",
   "version": "1.0.0",
   "scripts": {
-    "build": "NODE_ENV=production webpack --mode production",
+    "build": "set NODE_ENV=production&& webpack --mode production",
     "dev": "webpack serve",
     "server": "json-server --watch server.json --port 3333",
     "start": "npm run server & npm run build && node dist/bundle.js",
