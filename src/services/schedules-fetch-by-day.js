@@ -14,7 +14,7 @@ export async function schedulesFetchByDay({ date }) {
     return dailySchedules;
   } catch (error) {
     console.error(error);
-
     alert("Erro ao buscar agendamentos");
+    return []; // Return empty array instead of undefined
   }
 }
