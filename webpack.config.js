@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   target: 'web',
@@ -9,6 +10,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
+    publicPath: './',
   },
 
   devServer: {
@@ -33,6 +35,9 @@ module.exports = {
           to: path.resolve(__dirname, 'dist', "src", 'assets'),
         },
       ],
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     }),
   ],
   module: {
