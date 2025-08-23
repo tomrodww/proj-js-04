@@ -24,14 +24,13 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV === 'production' ? 'production' : 'development'),
     }),
     new HtmlWebpackPlugin({
       template: './index.html',
       favicon: './src/assets/scissors.svg',
       inject: true,
       scriptLoading: 'blocking',
-      base: process.env.NODE_ENV === 'production' ? '/proj-js-04/' : '/',
       minify: {
         removeComments: true,
         collapseWhitespace: true,
