@@ -8,15 +8,17 @@ periods.forEach((period) => {
     const cancelButton = event.target.classList.contains("cancel-icon");
     
     if (cancelButton) {
-      const item = event.target.closest("li")
+      const item = event.target.closest("li");
       const { id } = item.dataset;
 
-      if(id) {
+      if (id) {
         const isConfirmed = confirm("Tem certeza que deseja cancelar o agendamento?");
       
-        if(isConfirmed) {
-          await scheduleCancel({ id });
-          schedulesDay();
+        if (isConfirmed) {
+          const success = await scheduleCancel({ id });
+          if (success) {
+            await schedulesDay();
+          }
         }
       }
     }

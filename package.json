@@ -3,12 +3,13 @@
   "description": "Sistema de agendamento de cortes de cabelo",
   "author": "tomrodww",
   "version": "1.0.0",
+  "homepage": "https://tomrodww.github.io/proj-js-04",
   "scripts": {
-    "build": "set NODE_ENV=production&& webpack --mode production",
-    "dev": "webpack serve",
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production",
     "server": "json-server --watch server.json --port 3333",
-    "start": "npm run server & npm run build && node dist/bundle.js",
-    "deploy": "npm run build && gh-pages -d dist"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "dayjs": "^1.11.10",

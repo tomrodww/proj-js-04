@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { scheduleNew } from "../../services/schedule-new.js";
-import { schedulesDay } from "../schedules/load.js"
+import { schedulesDay } from "../schedules/load.js";
 
 const form = document.querySelector("form");
 const clientName = document.getElementById("client");
@@ -17,30 +17,26 @@ form.onsubmit = async (e) => {
   try {
     const name = clientName.value.trim();
 
-    if(!name) {
+    if (!name) {
       return alert("Name is required");
     }
 
     const hourSelected = document.querySelector(".hour-selected");
 
-    const [hour] = hourSelected.innerText.split(":");
+    if (!hourSelected) {
+      return alert("Hour is required");
+    }
 
+    const [hour] = hourSelected.innerText.split(":");
     const when = dayjs(selectedDate.value).add(hour, "hour").format();
-  
     const id = new Date().getTime();
 
     await scheduleNew({ id, name, when });
-
     await schedulesDay();
 
+    // Reset form
     clientName.value = "";
-
-    if(!hourSelected) {
-      return alert("Hour is required");
-    }
-    
-    
-
+    hourSelected.classList.remove("hour-selected");
   } catch (error) {
     alert("Appointment could not be scheduled");
     console.error(error);
