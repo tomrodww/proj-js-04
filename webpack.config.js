@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
@@ -8,7 +9,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/',
+    publicPath: process.env.NODE_ENV === 'production' ? '/proj-js-04/' : '/',
   },
 
   devServer: {
@@ -22,11 +23,27 @@ module.exports = {
     historyApiFallback: true,
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    }),
     new HtmlWebpackPlugin({
       template: './index.html',
       favicon: './src/assets/scissors.svg',
       inject: true,
       scriptLoading: 'blocking',
+      base: process.env.NODE_ENV === 'production' ? '/proj-js-04/' : '/',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
     }),
     new CopyWebpackPlugin({
       patterns: [
