@@ -244,7 +244,7 @@ body {
 
 ::-webkit-calendar-picker-indicator {
   cursor: pointer;
-  background: url(d2a2050085593dfe7047.svg) no-repeat;
+  background: url(/d2a2050085593dfe7047.svg) no-repeat;
 }
 
 .hours {
